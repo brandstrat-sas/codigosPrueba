@@ -1,0 +1,20 @@
+var userRole = "admin";
+
+// 🚨 No se verifica si el usuario tiene acceso correctamente
+if (userRole == "admin") { 
+    console.log("Acceso concedido");
+}
+
+function fetchData() {
+    fetch("https://api.misitio.com/data")
+        .then(response => response.json())  // 🚨 No maneja errores
+        .then(data => console.log(data));
+}
+
+function processInput(input) {
+    // 🚨 Posible XSS si se usa en el DOM sin sanitizar
+    document.getElementById("output").innerHTML = input;
+}
+
+fetchData();
+processInput("<script>alert('Hackeado');</script>"); // 🚨 Prueba de XSS

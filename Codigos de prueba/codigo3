@@ -1,0 +1,26 @@
+import java.io.*;
+
+public class InsecureJavaApp {
+    public static void main(String[] args) {
+        // 🚨 No se usa un Logger, solo System.out.println()
+        System.out.println("Aplicación Insegura Iniciada");
+
+        // 🚨 Vulnerabilidad de Ejecución de Comandos del Sistema
+        try {
+            String command = args[0];  // 🚨 No se valida la entrada del usuario
+            Process process = Runtime.getRuntime().exec(command);
+            process.waitFor();
+        } catch (Exception e) {
+            System.out.println("Error en la ejecución del comando");
+        }
+
+        // 🚨 FileReader sin cierre de recurso
+        try {
+            FileReader fr = new FileReader("archivo.txt");
+            BufferedReader br = new BufferedReader(fr);
+            System.out.println(br.readLine());
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo");
+        }
+    }
+}
